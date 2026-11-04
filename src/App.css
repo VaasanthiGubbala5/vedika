@@ -75,9 +75,11 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outl
 .lib-item {
   display: flex; align-items: center; width: 100%; text-align: left;
   font: 500 13px var(--body); color: var(--fg); background: rgba(255, 255, 255, 0.04);
-  border: 1px solid transparent; border-radius: 10px; padding: 10px 12px; cursor: pointer;
+  border: 1px solid transparent; border-radius: 10px; padding: 10px 12px; cursor: pointer; gap: 2px;
 }
+.lib-item .name { flex: 1; min-width: 0; }
 .lib-item:hover { border-color: var(--line); }
+.lib-item .tag { white-space: nowrap; flex: none; margin-left: 8px; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--line); border-radius: 999px; padding: 2px 6px; }
 .lib-item .plus { margin-left: auto; color: var(--gold); font-size: 16px; }
 .lib-item.upload { border: 1px dashed var(--gold); color: var(--gold); }
 

@@ -69,3 +69,17 @@ export function makeCutout(img) {
 
   return { src: canvas.toDataURL('image/png'), aspect: w / h }
 }
+
+// For backdrop photos: keep the whole picture (no cut-out), just make it a
+// sensible size and save it as JPG so it takes little storage.
+export function makeBackdropImage(img) {
+  const MAX = 1600
+  const k = Math.min(1, MAX / Math.max(img.width, img.height))
+  const w = Math.round(img.width * k)
+  const h = Math.round(img.height * k)
+  const canvas = document.createElement('canvas')
+  canvas.width = w
+  canvas.height = h
+  canvas.getContext('2d').drawImage(img, 0, 0, w, h)
+  return { src: canvas.toDataURL('image/jpeg', 0.85), aspect: w / h }
+}

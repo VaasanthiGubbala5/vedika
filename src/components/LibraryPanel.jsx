@@ -1,59 +1,34 @@
-import { useRef, useState } from 'react'
 import { LIBRARY, CATEGORIES } from '../data/library.js'
-import { loadImageFile, makeCutout } from '../utils/removeBackground.js'
+import PhotoUploadButton from './PhotoUploadButton.jsx'
 
-// The list of decor items a designer can add, plus photo upload.
-export default function LibraryPanel({ onAdd, onAddPhoto }) {
-  const fileRef = useRef()
-  const [message, setMessage] = useState('')
-
-  async function handleFile(e) {
-    const file = e.target.files?.[0]
-    e.target.value = ''
-    if (!file) return
-    if (!file.type.startsWith('image/')) {
-      setMessage('That file is not an image. Choose a JPG or PNG.')
-      return
-    }
-    try {
-      setMessage('Removing background…')
-      const img = await loadImageFile(file)
-      const cut = makeCutout(img)
-      onAddPhoto({ ...cut, name: file.name.replace(/\.[^.]+$/, '') })
-      setMessage('Added. Drag it into place.')
-    } catch (err) {
-      setMessage(err.message)
-    }
-  }
-
+// The list of decor items a designer can add, plus photo uploads.
+export default function LibraryPanel({ onAdd, onAddPhoto, onReplaceBackdrop }) {
   return (
     <aside className="panel library" aria-label="Decor library">
       <h2>Decor library</h2>
       <p className="hint">Tap an item to add it. Drag items to move them.</p>
 
       <div className="library-groups">
+        <section className="library-group">
+          <h3>From your photos</h3>
+          <PhotoUploadButton id="upload-backdrop" mode="backdrop" label="Replace backdrop with a photo" onReady={onReplaceBackdrop} />
+          <PhotoUploadButton id="upload-cutout" mode="cutout" label="Add a decor photo (cut-out)" onReady={onAddPhoto} />
+          <p className="hint">Backdrop: use a straight, front-facing photo. Cut-out: use a photo with a plain background.</p>
+        </section>
+
         {CATEGORIES.map((cat) => (
           <section key={cat} className="library-group">
             <h3>{cat}</h3>
             {LIBRARY.filter((i) => i.category === cat).map((i) => (
               <button key={i.type} className="lib-item" onClick={() => onAdd(i.type)}>
                 <span className="dot" style={{ background: i.color }} />
-                {i.name}
+                <span className="name">{i.name}</span>
+                {i.real && <span className="tag">3D model</span>}
                 <span className="plus" aria-hidden="true">+</span>
               </button>
             ))}
           </section>
         ))}
-
-        <section className="library-group">
-          <h3>Your photos</h3>
-          <button className="lib-item upload" onClick={() => fileRef.current.click()}>
-            Upload a decor photo
-            <span className="plus" aria-hidden="true">+</span>
-          </button>
-          <input id="photo-upload" ref={fileRef} type="file" accept="image/*" hidden onChange={handleFile} />
-          {message && <p className="hint" role="status">{message}</p>}
-        </section>
       </div>
     </aside>
   )

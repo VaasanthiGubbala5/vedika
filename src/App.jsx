@@ -5,6 +5,7 @@ import LibraryPanel from './components/LibraryPanel.jsx'
 import Inspector from './components/Inspector.jsx'
 import { findLibraryItem } from './data/library.js'
 import { PALETTES } from './data/palettes.js'
+import { BACKDROP_TYPES } from './models/index.js'
 import { loadDesign, saveDesign, STARTER_DESIGN } from './utils/storage.js'
 
 const newId = () => Math.random().toString(36).slice(2, 9)
@@ -54,6 +55,19 @@ export default function App() {
     const item = { id: newId(), type: 'photo', src, aspect, name, x: 0, z: 2.5, rotY: 0, scale: 1, color: '#ffffff' }
     setItems((prev) => [...prev, item])
     setSelectedId(item.id)
+    setLibraryOpen(false)
+  }
+
+  // Swap the current backdrop for one made from a photo.
+  // It keeps the old backdrop's place, or goes to the back of the stage.
+  function replaceBackdrop({ src, aspect, name }) {
+    const old = items.find((i) => BACKDROP_TYPES.includes(i.type))
+    const backdrop = {
+      id: newId(), type: 'photoBackdrop', src, aspect, name,
+      x: old?.x ?? 0, z: old?.z ?? -3.15, rotY: old?.rotY ?? 0, scale: 1, color: '#ffffff',
+    }
+    setItems((prev) => [...prev.filter((i) => !BACKDROP_TYPES.includes(i.type)), backdrop])
+    setSelectedId(backdrop.id)
     setLibraryOpen(false)
   }
 
@@ -141,9 +155,10 @@ export default function App() {
                 onDuplicate={duplicateSelected}
                 onDelete={deleteSelected}
                 onClose={() => setSelectedId(null)}
+                onReplaceBackdrop={replaceBackdrop}
               />
             ) : (
-              <LibraryPanel onAdd={addItem} onAddPhoto={addPhoto} />
+              <LibraryPanel onAdd={addItem} onAddPhoto={addPhoto} onReplaceBackdrop={replaceBackdrop} />
             )}
           </div>
 

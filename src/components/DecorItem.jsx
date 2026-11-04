@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { useThree } from '@react-three/fiber'
 import { MODELS } from '../models/index.js'
 import { findLibraryItem } from '../data/library.js'
@@ -35,7 +36,10 @@ export default function DecorItem({ item, palette, evening, selected, onPress })
       onClick={(e) => e.stopPropagation()}
     >
       <group scale={item.scale}>
-        <Model {...item} palette={palette} evening={evening} seed={seedFromId(item.id)} />
+        {/* Suspense: real 3D model files take a moment to download */}
+        <Suspense fallback={null}>
+          <Model {...item} palette={palette} evening={evening} seed={seedFromId(item.id)} />
+        </Suspense>
       </group>
 
       {selected && (

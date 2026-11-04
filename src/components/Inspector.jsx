@@ -1,9 +1,15 @@
 import { findLibraryItem } from '../data/library.js'
 import { QUICK_COLORS } from '../data/palettes.js'
+import { BACKDROP_TYPES } from '../models/index.js'
+import PhotoUploadButton from './PhotoUploadButton.jsx'
+
+// Items whose colour can't be changed (photos and glass items).
+const NO_COLOR = ['photo', 'photoBackdrop', 'hurricane', 'vase']
 
 // Edit the selected item: colour, size, rotation, duplicate, delete.
-export default function Inspector({ item, onChange, onDuplicate, onDelete, onClose }) {
+export default function Inspector({ item, onChange, onDuplicate, onDelete, onClose, onReplaceBackdrop }) {
   const isPhoto = item.type === 'photo'
+  const isBackdrop = BACKDROP_TYPES.includes(item.type)
   const name = isPhoto ? item.name || 'Photo' : findLibraryItem(item.type)?.name
   const rotate = (deg) => onChange({ rotY: item.rotY + (deg * Math.PI) / 180 })
 
@@ -14,7 +20,13 @@ export default function Inspector({ item, onChange, onDuplicate, onDelete, onClo
         <button className="chip" onClick={onClose}>Done</button>
       </div>
 
-      {!isPhoto && (
+      {isBackdrop && (
+        <div className="field">
+          <PhotoUploadButton id="replace-backdrop" mode="backdrop" label="Replace with a photo" onReady={onReplaceBackdrop} />
+        </div>
+      )}
+
+      {!NO_COLOR.includes(item.type) && (
         <div className="field">
           <label htmlFor="item-color">Colour</label>
           <div className="swatches">

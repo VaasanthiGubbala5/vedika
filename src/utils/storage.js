@@ -1,6 +1,6 @@
 // Saves the design in the browser (localStorage) so it is still there
 // after a refresh. Later we will move this to a real database (Supabase).
-const KEY = 'vedika-design-v1'
+const KEY = 'vedika-design-v2' // v2: Stage 2 starter design with real models
 
 export function loadDesign() {
   try {
@@ -27,7 +27,9 @@ export const STARTER_DESIGN = {
   light: 'evening',
   items: [
     { id: 'arch', type: 'archBackdrop', x: 0, z: -3.15, rotY: 0, scale: 1, color: '#f7efe6' },
-    { id: 'sofa', type: 'sofa', x: 0, z: -2.2, rotY: 0, scale: 1, color: '#6d1f3a' },
+    { id: 'sofa', type: 'sofa', x: 0, z: -2.0, rotY: 0, scale: 1.25, color: '#f2d6d8' },
+    { id: 'hurr-l', type: 'hurricane', x: -1.7, z: -2.2, rotY: 0, scale: 1, color: '#ffffff' },
+    { id: 'hurr-r', type: 'hurricane', x: 1.7, z: -2.2, rotY: 0, scale: 1, color: '#ffffff' },
     { id: 'urn-l', type: 'urn', x: -2.6, z: -2.4, rotY: 0, scale: 1, color: '#c9a35e' },
     { id: 'urn-r', type: 'urn', x: 2.6, z: -2.4, rotY: 0, scale: 1, color: '#c9a35e' },
     { id: 'pillar-l', type: 'pillar', x: -3.9, z: -2.6, rotY: 0, scale: 1, color: '#f4ede3' },
