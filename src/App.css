@@ -1,0 +1,129 @@
+/* Vedika design tokens: an evening-reception palette (deep plum, ivory, gold). */
+:root {
+  --bg: #17121a;
+  --panel: rgba(28, 21, 30, 0.86);
+  --line: rgba(226, 200, 160, 0.22);
+  --fg: #f3ebe1;
+  --muted: #b9aab0;
+  --gold: #d9b47a;
+  --danger: #e58a8a;
+  --display: 'Italiana', 'Didot', 'Bodoni 72', Georgia, serif;
+  --body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 14px; overflow: hidden; }
+[hidden] { display: none !important; }
+
+.app { position: relative; height: 100%; }
+.canvas-wrap { position: absolute; inset: 0; touch-action: none; }
+
+/* ---------- shared bits ---------- */
+.brand h1 { font-family: var(--display); font-weight: 400; font-size: 30px; letter-spacing: 0.06em; margin: 0; line-height: 1; }
+.brand span { display: block; margin-top: 6px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+
+.chip {
+  font: 500 12px/1 var(--body);
+  color: var(--fg);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+.chip:hover { border-color: var(--gold); }
+.chip[aria-pressed='true'] { border-color: var(--gold); color: var(--gold); background: rgba(217, 180, 122, 0.12); }
+.chip.primary { background: var(--gold); color: #1d1418; border-color: var(--gold); font-weight: 600; }
+.chip.danger { color: var(--danger); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; vertical-align: -2px; margin-right: 6px; border: 1px solid rgba(255, 255, 255, 0.3); flex: none; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; }
+.hint { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 0; }
+
+/* ---------- top bar ---------- */
+.topbar {
+  position: absolute; top: 0; left: 0; right: 0;
+  padding: calc(env(safe-area-inset-top, 0px) + 14px) max(16px, env(safe-area-inset-right, 0px)) 14px max(16px, env(safe-area-inset-left, 0px));
+  display: flex; gap: 16px; align-items: flex-start; justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(23, 18, 26, 0.9), rgba(23, 18, 26, 0));
+  pointer-events: none;
+}
+.topbar > * { pointer-events: auto; }
+.topbar-controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.chip-group { display: flex; gap: 6px; }
+
+/* ---------- side panel (library / inspector) ---------- */
+.side {
+  position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); top: 96px; bottom: 16px;
+  width: 270px; display: flex; flex-direction: column;
+}
+.panel {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+  padding: 16px; display: flex; flex-direction: column; gap: 14px;
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  max-height: 100%; overflow-y: auto;
+}
+.panel h2 { font-family: var(--display); font-weight: 400; font-size: 22px; margin: 0; letter-spacing: 0.03em; }
+.library-groups { display: flex; flex-direction: column; gap: 14px; }
+.library-group { display: flex; flex-direction: column; gap: 6px; }
+.library-group h3 { margin: 0; font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.lib-item {
+  display: flex; align-items: center; width: 100%; text-align: left;
+  font: 500 13px var(--body); color: var(--fg); background: rgba(255, 255, 255, 0.04);
+  border: 1px solid transparent; border-radius: 10px; padding: 10px 12px; cursor: pointer;
+}
+.lib-item:hover { border-color: var(--line); }
+.lib-item .plus { margin-left: auto; color: var(--gold); font-size: 16px; }
+.lib-item.upload { border: 1px dashed var(--gold); color: var(--gold); }
+
+/* inspector */
+.inspector-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label, .field .label { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; }
+.field output { font-variant-numeric: tabular-nums; letter-spacing: 0; text-transform: none; color: var(--fg); }
+.swatches { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.swatch { width: 26px; height: 26px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25); }
+.swatch[aria-pressed='true'] { border-color: var(--gold); }
+input[type='color'] { width: 34px; height: 30px; border: 1px solid var(--line); border-radius: 8px; background: none; padding: 2px; }
+input[type='range'] { width: 100%; accent-color: var(--gold); }
+
+.fab { display: none; }
+
+/* ---------- presentation mode ---------- */
+.present-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  padding: calc(env(safe-area-inset-top, 0px) + 14px) max(16px, env(safe-area-inset-right, 0px)) 14px max(16px, env(safe-area-inset-left, 0px));
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+
+/* ---------- phones and small tablets ---------- */
+@media (max-width: 760px) {
+  .topbar { flex-direction: column; gap: 10px; }
+  .topbar-controls { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; width: 100%; padding-bottom: 4px; scrollbar-width: none; }
+  .topbar-controls::-webkit-scrollbar { display: none; }
+
+  .side {
+    left: 0; right: 0; top: auto; bottom: 0; width: auto;
+    padding: 0 max(12px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 12px) max(12px, env(safe-area-inset-left, 0px));
+    max-height: 52%;
+  }
+  .side .library { display: none; }
+  .side.open .library { display: flex; }
+  .side.open { bottom: 64px; }
+
+  .fab {
+    display: block; position: absolute;
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+    padding: 13px 18px; font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto; }
+}
