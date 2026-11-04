@@ -22,7 +22,7 @@ export default function Stage({ palette, evening }) {
       {/* polished floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[80, 80]} />
-        <meshStandardMaterial color={evening ? '#2a2228' : '#b9ada6'} roughness={0.55} metalness={0.05} envMapIntensity={0.35} />
+        <meshStandardMaterial color={evening ? '#2a2228' : '#b9ada6'} roughness={0.8} metalness={0} envMapIntensity={0.15} />
       </mesh>
 
       {/* stage platform, front step and gold edge */}

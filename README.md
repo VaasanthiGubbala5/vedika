@@ -28,12 +28,27 @@ To try it on your phone, connect the phone to the same Wi-Fi and run
   - Rose-shaped flowers instead of simple balls
   - **Replace backdrop with a photo:** upload a backdrop picture (for example from Pinterest) and it replaces the current backdrop as a curved 3D panel with depth
   - Add a decor photo as a standing cut-out (plain backgrounds are removed)
-- [ ] **Stage 3:** AI photo-to-3D for decor objects (sofa, urn, stand photos become real 3D models)
+- [x] **Stage 3:** big decor library + AI photo-to-3D
+  - 4 mandaps: floral canopy, South Indian temple, modern minimal, dome pavilion (each with havan kund and seats)
+  - Fabric decor: ceiling drape, fabric swag arch, sheer entrance curtains, pleated fabric backdrop
+  - Florals: roses, marigolds, hydrangeas, jasmine, baby's breath, pampas grass; marigold and jasmine string curtains, rose flower wall, floral hoop, hydrangea box, pampas vase, aisle flowers
+  - Trending props: neon sign on greenery (editable text), welcome board (editable text), brass urli, kuthu vilakku, crystal chandelier, Moroccan lanterns, marigold jhoola, decorative umbrellas
+  - Library search
+  - **Photo to real 3D object (AI):** uses the free Hunyuan3D-2.1 model on Hugging Face (needs a free Hugging Face access token, saved only on your device)
 - [ ] **Stage 4:** designer accounts and saving designs online
 - [ ] **Stage 5:** client share link
 - [ ] **Stage 6:** pricing and PDF proposals
 - [ ] **Stage 7:** more venue types (mandap, haldi, sangeet)
 - [ ] **Stage 8:** go live (Vercel)
+
+### Using photo to real 3D (AI)
+
+1. Create a free account at huggingface.co.
+2. Settings → Access Tokens → Create new token → type **Read** → copy it (starts with `hf_`).
+3. In Vedika: Decor library → "Set up: photo to real 3D" → paste the token → Save.
+4. Tap "Photo to real 3D object (AI)" and choose a photo of ONE object. It takes 1 to 3 minutes.
+
+The free allowance is a few models per day. The AI-made models are saved in this browser only.
 
 ### Tips for good photo backdrops
 

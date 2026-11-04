@@ -4,13 +4,13 @@ import { BACKDROP_TYPES } from '../models/index.js'
 import PhotoUploadButton from './PhotoUploadButton.jsx'
 
 // Items whose colour can't be changed (photos and glass items).
-const NO_COLOR = ['photo', 'photoBackdrop', 'hurricane', 'vase']
+const NO_COLOR = ['photo', 'photoBackdrop', 'aiModel', 'hurricane', 'vase', 'aisleFlowers', 'marigoldCurtain', 'jasmineCurtain', 'flowerWall', 'urli', 'kuthuVilakku']
 
 // Edit the selected item: colour, size, rotation, duplicate, delete.
 export default function Inspector({ item, onChange, onDuplicate, onDelete, onClose, onReplaceBackdrop }) {
   const isPhoto = item.type === 'photo'
   const isBackdrop = BACKDROP_TYPES.includes(item.type)
-  const name = isPhoto ? item.name || 'Photo' : findLibraryItem(item.type)?.name
+  const name = isPhoto || item.type === 'aiModel' ? item.name || 'Photo' : findLibraryItem(item.type)?.name
   const rotate = (deg) => onChange({ rotY: item.rotY + (deg * Math.PI) / 180 })
 
   return (
@@ -23,6 +23,13 @@ export default function Inspector({ item, onChange, onDuplicate, onDelete, onClo
       {isBackdrop && (
         <div className="field">
           <PhotoUploadButton id="replace-backdrop" mode="backdrop" label="Replace with a photo" onReady={onReplaceBackdrop} />
+        </div>
+      )}
+
+      {typeof item.text === 'string' && (
+        <div className="field">
+          <label htmlFor="item-text">Text</label>
+          <textarea id="item-text" rows={2} value={item.text} onChange={(e) => onChange({ text: e.target.value })} />
         </div>
       )}
 

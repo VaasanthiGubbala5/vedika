@@ -3,6 +3,7 @@ import Scene from './components/Scene.jsx'
 import TopBar from './components/TopBar.jsx'
 import LibraryPanel from './components/LibraryPanel.jsx'
 import Inspector from './components/Inspector.jsx'
+import AiPanel from './components/AiPanel.jsx'
 import { findLibraryItem } from './data/library.js'
 import { PALETTES } from './data/palettes.js'
 import { BACKDROP_TYPES } from './models/index.js'
@@ -45,6 +46,7 @@ export default function App() {
       rotY: 0,
       scale: 1,
       color: lib.color,
+      ...(lib.text ? { text: lib.text } : {}),
     }
     setItems((prev) => [...prev, item])
     setSelectedId(item.id)
@@ -53,6 +55,13 @@ export default function App() {
 
   function addPhoto({ src, aspect, name }) {
     const item = { id: newId(), type: 'photo', src, aspect, name, x: 0, z: 2.5, rotY: 0, scale: 1, color: '#ffffff' }
+    setItems((prev) => [...prev, item])
+    setSelectedId(item.id)
+    setLibraryOpen(false)
+  }
+
+  function addAiModel({ modelKey, name }) {
+    const item = { id: newId(), type: 'aiModel', modelKey, name, x: 0, z: 2.5, rotY: 0, scale: 1, color: '#ffffff' }
     setItems((prev) => [...prev, item])
     setSelectedId(item.id)
     setLibraryOpen(false)
@@ -158,7 +167,12 @@ export default function App() {
                 onReplaceBackdrop={replaceBackdrop}
               />
             ) : (
-              <LibraryPanel onAdd={addItem} onAddPhoto={addPhoto} onReplaceBackdrop={replaceBackdrop} />
+              <LibraryPanel
+                onAdd={addItem}
+                onAddPhoto={addPhoto}
+                onReplaceBackdrop={replaceBackdrop}
+                aiSlot={<AiPanel onModelReady={addAiModel} />}
+              />
             )}
           </div>
 

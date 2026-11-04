@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@gradio/client": "2.7.1",
     "@react-three/drei": "9.114.0",
     "@react-three/fiber": "8.17.10",
     "react": "18.3.1",

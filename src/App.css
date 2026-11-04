@@ -83,6 +83,21 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outl
 .lib-item .plus { margin-left: auto; color: var(--gold); font-size: 16px; }
 .lib-item.upload { border: 1px dashed var(--gold); color: var(--gold); }
 
+.search, .field textarea, .field input[type='password'], .field input[type='text'] {
+  width: 100%; font: 400 13px var(--body); color: var(--fg); background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px;
+}
+.field textarea { resize: vertical; }
+.search::placeholder { color: var(--muted); }
+
+.ai-box { display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: rgba(217, 180, 122, 0.06); }
+.ai-box summary { font-size: 13px; font-weight: 600; color: var(--gold); cursor: pointer; }
+.ai-box[open] { gap: 10px; }
+.lib-item.ai { border-style: solid; }
+.lib-item:disabled { opacity: 0.6; cursor: progress; }
+.hint.error { color: var(--danger); }
+.link { background: none; border: none; color: var(--muted); font: 500 12px var(--body); text-decoration: underline; padding: 0; cursor: pointer; align-self: flex-start; }
+
 /* inspector */
 .inspector-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .field { display: flex; flex-direction: column; gap: 8px; }
